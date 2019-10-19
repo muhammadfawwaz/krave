@@ -9,6 +9,23 @@ router.get('/create', function(req, res, next) {
     })
 });
 
+router.get('/checkuser', function(req, res, next) {
+    db.User.findOne({
+        where: {
+            uid: req.query.uid
+        }
+    }).then(findRes => {
+        if(findRes) {
+           return res.send({
+               status: 'registered'
+           }) 
+        }
+        return res.send({
+            status: 'not registered'
+        })
+    })
+})
+
 router.get('/adduser', function(req, res, next) {
     db.User.findOne({
         where: {

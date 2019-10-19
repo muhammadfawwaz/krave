@@ -56,6 +56,9 @@ router.get('/adduser', function(req, res, next) {
                 place_id: []
             })
         }
+        res.send({
+            result: 'ok'
+        })
     })
 })
 
@@ -64,17 +67,22 @@ router.get('/addplace', function(req, res, next) {
         where: {
             uid: req.query.uid
         }
-    }).then(dbresult => {
-        dbresult.place_id.push(req.query.place_id)
-        dbresult.update({
-            place_id: dbresult.place_id
-        }, {
-            where: {
-                uid: req.query.uid
-            }
-        }).then(updateRes => {
-            res.send(updateRes)
-        })
+    }).then(async (dbresult) => {
+        console.log(dbresult.place_id.indexOf(req.query.placeid) == -1)
+        console.log(dbresult.place_id)
+        if(dbresult.place_id.indexOf(req.query.placeid) == -1) {
+            dbresult.place_id.push(req.query.placeid)
+            await dbresult.update({
+                place_id: dbresult.place_id
+            }, {
+                where: {
+                    uid: req.query.uid
+                }
+            }).then(updateRes => {
+                // console.log(updateRes)
+                res.send(updateRes)
+            })
+        }
     })
 });
 

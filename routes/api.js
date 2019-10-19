@@ -22,6 +22,13 @@ router.get('/getplace', async (req,res) => {
 })
 
 router.get('/create', function(req, res, next) {
+    // db.User.update({
+    //     place_id: ['ChIJF6cDDq_paC4RuL4qblw-Ca0']
+    // }, {
+    //     where: {
+    //         id: 3
+    //     }
+    // })
     db.User.findAll().then(dbresult => {
         res.send(dbresult);
     })
@@ -83,6 +90,9 @@ router.get('/addplace', function(req, res, next) {
                 res.send(updateRes)
             })
         }
+        res.send({
+            result: 'ok'
+        })
     })
 });
 

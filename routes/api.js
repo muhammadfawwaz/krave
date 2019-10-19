@@ -62,15 +62,15 @@ router.get('/adduser', function(req, res, next) {
 router.get('/addplace', function(req, res, next) {
     db.User.findOne({
         where: {
-            id: 1
+            uid: req.query.uid
         }
     }).then(dbresult => {
-        dbresult.place_id.push("ketiga")
+        dbresult.place_id.push(req.query.place_id)
         dbresult.update({
             place_id: dbresult.place_id
         }, {
             where: {
-                id: 1
+                uid: req.query.uid
             }
         }).then(updateRes => {
             res.send(updateRes)

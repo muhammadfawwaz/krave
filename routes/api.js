@@ -1,8 +1,26 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../db/database')
+var db = require('../db/database');
+const request = require('request');
 
 /* GET users listing. */
+router.get('/getplace', async (req,res) => {
+    await request.get({
+        headers: {
+          'Accept': 'application/json'
+        },
+        url:     'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + req.query.lat + ',' + req.query.lon + '&radius=10000&type=park&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
+    }, async function(error, response, body){
+      // console.log(JSON.parse(body).results)
+      let objRes = {
+        result: JSON.parse(body).results.slice(0,10)
+      }
+      
+      // console.log(typeof JSON.parse(body))
+      res.end(JSON.stringify(objRes))
+    })
+})
+
 router.get('/create', function(req, res, next) {
     db.User.findAll().then(dbresult => {
         res.send(dbresult);

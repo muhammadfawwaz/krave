@@ -8,12 +8,13 @@
 </head>
 <body>
     <%= result %>
-    <p id="teks">aaaa</p>
+    <p id="teks" onclick="changeUid">aaaa</p>
 </body>
 </html>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script src="liff-starter.js"></script>
 <script>
+    // document.getElementById('teks').textContent = 'b'
     window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
@@ -28,6 +29,6 @@ function initializeApp(data) {
     // document.getElementById('roomidfield').textContent = data.context.roomId;
     // document.getElementById('groupidfield').textContent = data.context.groupId;
 
-    document.getElementById('teks').innerHTML = 'b'
+    document.getElementById('teks').textContent = data.context.userId
 }
 </script>

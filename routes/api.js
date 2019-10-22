@@ -34,6 +34,25 @@ router.get('/create', function(req, res, next) {
     })
 });
 
+router.get('/updatestate', function(req, res, next) {
+    let uid = req.query.uid
+    let place_id = req.query.place_id
+
+    db.User.update({
+        place_state: place_id
+    }, {
+        where: {
+            uid: uid
+        }
+    })
+})
+
+router.get('/detailstate', function(req, res, next) {
+    db.User.findAll().then(dbresult => {
+        res.render('detail',{result: dbresult})
+    })
+});
+
 router.get('/checkuser', function(req, res, next) {
     db.User.findOne({
         where: {
@@ -69,6 +88,25 @@ router.get('/adduser', function(req, res, next) {
     })
 })
 
+router.get('/getdata', function(req, res, next) {
+    db.User.findOne({
+        where: {
+            uid: req.query.uid
+        }
+    }).then(findResult => {
+        var convObj = []
+        console.log(findResult.place_id)
+        findResult.place_id.forEach(r => {
+            convObj.push({
+                place_id: r
+            })
+        })
+        res.send({
+            result: convObj
+        })
+    })
+})
+
 router.get('/addplace', function(req, res, next) {
     db.User.findOne({
         where: {
@@ -95,5 +133,77 @@ router.get('/addplace', function(req, res, next) {
         })
     })
 });
+
+router.get('/edituserdata', async function(req, res, next) {
+    await editUserData(req.query.uid,req.query.col,req.query.val)
+    res.send({
+        result: 'ok'
+    })
+})
+
+function editUserData(uid,col,val) {
+    if(col == 'add') {
+        db.User.findOne({
+            where: {
+                uid: uid
+            }
+        }).then(findRes => {
+            if(!findRes) {
+                db.User.create({
+                    uid: uid,
+                    place_id: []
+                })
+            }
+        })
+    }
+    else {
+        let msg = {}
+        if(col == 'title') {
+            msg = {
+                title: val
+            }
+        }
+        else if (col == 'latlon'){
+            msg = {
+                latlon: val
+            }
+        }
+        else if (col == 'method'){
+            msg = {
+                method: val
+            }
+        }
+        else if (col == 'date'){
+            msg = {
+                date: val
+            }
+        }
+        else if (col == 'status'){
+            msg = {
+                status: val
+            }
+        }
+        else if (col == 'budget'){
+            msg = {
+                method: val
+            }
+        }
+        else if (col == 'placestate'){
+            msg = {
+                place_state: val
+            }
+        }
+        
+        db.User.update(msg, {
+            where: {
+                uid: uid
+            }
+        })
+    }
+
+    res.send({
+        result: 'ok'
+    })
+}
 
 module.exports = router;

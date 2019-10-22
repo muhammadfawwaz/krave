@@ -7,9 +7,37 @@ var User = sequelize.define('user', {
     uid: {
       type: Sequelize.STRING,
     },
+    method: {
+      type: Sequelize.STRING
+    },
+    title: {
+      type: Sequelize.STRING
+    },
     place_id: {
       type: Sequelize.ARRAY(Sequelize.STRING)
-    }
+    },
+    date: {
+      type: Sequelize.STRING
+    },
+    status: {
+      type: Sequelize.STRING
+    },
+    budget: {
+      type: Sequelize.STRING
+    },
+    latlon: {
+      type: Sequelize.STRING
+    },
+    place_state: {
+      type: Sequelize.STRING,
+    },
 });
+
+// User.sync({force: true}).then(function () {
+//   User.create({
+//     uid: "tesinf",
+//     place_id: []
+//   })
+// })
 
 exports.User = User

@@ -192,7 +192,7 @@ function editUserData(uid,col,val,id) {
     }
     else if (col == 'method'){
         db.User.create({
-            uid: req.query.uid,
+            uid: uid,
             place_id: [],
             method: val
         })

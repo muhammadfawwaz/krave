@@ -156,25 +156,26 @@ router.get('/getdetail', async function(req, res, next) {
     })
 })
 
-router.get('/edituserdata', async function(req, res, next) {
-    await editUserData(req.query.uid,req.query.col,req.query.val)
-    if(req.query.col == 'method') {
-        await db.User.findAll({
-            where: {
-                uid: req.query.uid
-            }
-        }).then(findRes => {
-            return res.send({
-                result: findRes.length
-            })
+router.get('/getindex', async function(req, res, next) {
+    db.User.findAll({
+        where: {
+            uid: req.query.uid
+        }
+    }).then(async (dbresult) => {
+        res.send({
+            result: dbresult[length-1].id
         })
-    }
-    return res.send({
+    })
+})
+
+router.get('/edituserdata', async function(req, res, next) {
+    await editUserData(req.query.uid,req.query.col,req.query.val,req.query.id)
+    res.send({
         result: 'ok'
     })
 })
 
-function editUserData(uid,col,val) {
+function editUserData(uid,col,val,id) {
     if(col == 'add') {
         db.User.findOne({
             where: {
@@ -231,7 +232,8 @@ function editUserData(uid,col,val) {
         
         db.User.update(msg, {
             where: {
-                uid: uid
+                uid: uid,
+                id:id
             }
         })
     }

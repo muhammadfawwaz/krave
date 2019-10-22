@@ -158,7 +158,18 @@ router.get('/getdetail', async function(req, res, next) {
 
 router.get('/edituserdata', async function(req, res, next) {
     await editUserData(req.query.uid,req.query.col,req.query.val)
-    res.send({
+    if(req.query.col == 'method') {
+        await db.User.findAll({
+            where: {
+                uid: req.query.uid
+            }
+        }).then(findRes => {
+            return res.send({
+                result: findRes.length
+            })
+        })
+    }
+    return res.send({
         result: 'ok'
     })
 })
@@ -178,6 +189,13 @@ function editUserData(uid,col,val) {
             }
         })
     }
+    else if (col == 'method'){
+        db.User.create({
+            uid: req.query.uid,
+            place_id: [],
+            method: val
+        })
+    }
     else {
         let msg = {}
         if(col == 'title') {
@@ -188,11 +206,6 @@ function editUserData(uid,col,val) {
         else if (col == 'latlon'){
             msg = {
                 latlon: val
-            }
-        }
-        else if (col == 'method'){
-            msg = {
-                method: val
             }
         }
         else if (col == 'date'){

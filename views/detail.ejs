@@ -13,6 +13,7 @@
 </html>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
+    document.getElementById('teks').textContent = window.location.href
     liff
         .init({
             liffId: '1653349907-Zjr0gBlY'
@@ -26,6 +27,6 @@
         });
     
     liff.getProfile().then(function(profile) {
-        document.getElementById('teks').textContent = profile.userId
+        document.getElementById('teks').textContent = window.location.href
     })
 </script>

@@ -9,26 +9,25 @@
 <body>
     <%= result %>
     <p id="teks">aaaa</p>
-    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-    <script src="liff-starter.js"></script>
-    <script>
-        function initializeLiff(myLiffId) {
-    liff
-        .init({
-            liffId: myLiffId
-        })
-        .then(() => {
-            // start to use LIFF's api
-            initializeApp();
-            liff.getProfile().then(function(res) {
-                document.getElementById('teks').innerHTML = res.userId
-            })
-        })
-        .catch((err) => {
-        });
-}
-        const url = 'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJF6cDDq_paC4RuL4qblw-Ca0&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
-        
-    </script>
 </body>
 </html>
+<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script src="liff-starter.js"></script>
+<script>
+    window.onload = function (e) {
+    liff.init(function (data) {
+        initializeApp(data);
+    });
+};
+
+function initializeApp(data) {
+    // document.getElementById('languagefield').textContent = data.language;
+    // document.getElementById('viewtypefield').textContent = data.context.viewType;
+    // document.getElementById('useridfield').textContent = data.context.userId;
+    // document.getElementById('utouidfield').textContent = data.context.utouId;
+    // document.getElementById('roomidfield').textContent = data.context.roomId;
+    // document.getElementById('groupidfield').textContent = data.context.groupId;
+
+    document.getElementById('teks').innerHTML = data.context.userId
+}
+</script>

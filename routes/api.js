@@ -169,6 +169,7 @@ router.get('/getindex', async function(req, res, next) {
 })
 
 router.get('/edituserdata', async function(req, res, next) {
+    console.log(req.query)
     await editUserData(req.query.uid,req.query.col,req.query.val,req.query.id)
     res.send({
         result: 'ok'

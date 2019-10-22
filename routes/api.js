@@ -165,7 +165,7 @@ router.get('/getindex', async function(req, res, next) {
         }
     }).then(async (dbresult) => {
         if(dbresult) return res.send({
-            result: dbresult[dbresult.length-1].id
+            result: dbresult.length-1
         })
         return res.send({
             result: ''

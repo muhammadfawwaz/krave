@@ -134,6 +134,28 @@ router.get('/addplace', function(req, res, next) {
     })
 });
 
+router.get('/getdetail', async function(req, res, next) {
+    db.User.findOne({
+        where: {
+            uid: req.query.uid
+        }
+    }).then(async (dbresult) => {
+        await request.get({
+            headers: {
+              'Accept': 'application/json'
+            },
+            url:     'https://maps.googleapis.com/maps/api/place/details/json?place_id=' + dbresult.place_state + '&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
+        }, async function(error, response, body){
+            let objRes = {
+                result: JSON.parse(body).result
+            }
+            
+            // console.log(typeof JSON.parse(body))
+            res.end(JSON.stringify(objRes))
+        })
+    })
+})
+
 router.get('/edituserdata', async function(req, res, next) {
     await editUserData(req.query.uid,req.query.col,req.query.val)
     res.send({

@@ -29,9 +29,9 @@
         // document.getElementById('teks').textContent = profile.userId
         var url = 'https://kravehack.herokuapp.com/api/getdetail?uid=' + profile.userId
         fetch(url).then(function(data) {
-            return data.json()
+            document.getElementById('teks').textContent = data.result.name
         }).then(function(res) {
-            document.getElementById('teks').textContent = res
+            // document.getElementById('teks').textContent = 
         })
     })
 </script>

@@ -163,8 +163,11 @@ router.get('/getindex', async function(req, res, next) {
             uid: req.query.uid
         }
     }).then(async (dbresult) => {
-        res.send({
+        if(dbresult) return res.send({
             result: dbresult[dbresult.length-1].id
+        })
+        return res.send({
+            result: ''
         })
     })
 })

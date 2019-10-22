@@ -110,7 +110,8 @@ router.get('/getdata', function(req, res, next) {
 router.get('/addplace', function(req, res, next) {
     db.User.findOne({
         where: {
-            uid: req.query.uid
+            uid: req.query.uid,
+            id: req.query.id
         }
     }).then(async (dbresult) => {
         console.log(dbresult.place_id.indexOf(req.query.placeid) == -1)

@@ -157,6 +157,7 @@ router.get('/getdetail', async function(req, res, next) {
 })
 
 router.get('/getindex', async function(req, res, next) {
+    console.log(req.query)
     db.User.findAll({
         where: {
             uid: req.query.uid

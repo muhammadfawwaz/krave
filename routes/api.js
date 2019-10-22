@@ -200,10 +200,6 @@ function editUserData(uid,col,val) {
             }
         })
     }
-
-    res.send({
-        result: 'ok'
-    })
 }
 
 module.exports = router;

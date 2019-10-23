@@ -29,7 +29,7 @@ router.get('/create', function(req, res, next) {
     //         id: 3
     //     }
     // })
-    db.User.findAll().then(dbresult => {
+    db.State.findAll().then(dbresult => {
         res.send(dbresult);
     })
 });
@@ -165,7 +165,7 @@ router.get('/getindex', async function(req, res, next) {
         }
     }).then(async (dbresult) => {
         return res.send({
-            result: dbresult.id
+            result: dbresult.lastid
         })
         // if(dbresult) return res.send({
         //     result: dbresult.length-1

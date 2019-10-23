@@ -49,5 +49,10 @@ var State = sequelize.define('state', {
 //   })
 // })
 
+// State.destroy({
+//   where: {},
+//   truncate: true
+// })
+
 exports.User = User
 exports.State = State

@@ -205,10 +205,26 @@ function editUserData(uid,col,val,id) {
             place_id: [],
             method: val
         }).then(dbcreate => {
-            console.log(dbcreate)
-            db.State.create({
-                uid: uid,
-                lastid: dbcreate.id
+            db.State.findOne({
+                where: {
+                    uid: uid
+                }
+            }).then(findRes => {
+                if(findRes) {
+                    db.State.update({
+                        id: dbcreate.id
+                    }, {
+                        where: {
+                            uid: uid,
+                        }
+                    })
+                }
+                else {
+                    db.State.create({
+                        uid: uid,
+                        lastid: dbcreate.id
+                    })
+                }
             })
         })
     }

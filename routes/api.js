@@ -219,6 +219,7 @@ router.get('/historyitinerary', async function(req, res, next) {
     }).then(findRes => {
         res.send({
             result: 'ok'
+        })
     })
 })
 

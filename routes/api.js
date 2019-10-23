@@ -126,10 +126,10 @@ router.get('/addplace', function(req, res, next) {
                 }
             }).then(updateRes => {
                 // console.log(updateRes)
-                res.send(updateRes)
+                return res.send(updateRes)
             })
         }
-        res.send({
+        return res.send({
             result: 'ok'
         })
     })

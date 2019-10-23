@@ -29,7 +29,7 @@ router.get('/create', function(req, res, next) {
     //         id: 3
     //     }
     // })
-    db.State.findAll().then(dbresult => {
+    db.User.findAll().then(dbresult => {
         res.send(dbresult);
     })
 });
@@ -126,7 +126,7 @@ router.get('/addplace', function(req, res, next) {
                 }
             }).then(updateRes => {
                 // console.log(updateRes)
-                return res.send(updateRes)
+                // return res.send(updateRes)
             })
         }
         return res.send({
@@ -212,7 +212,7 @@ function editUserData(uid,col,val,id) {
             }).then(findRes => {
                 if(findRes) {
                     db.State.update({
-                        id: dbcreate.id
+                        lastid: dbcreate.id
                     }, {
                         where: {
                             uid: uid,

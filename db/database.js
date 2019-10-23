@@ -45,12 +45,12 @@ var State = sequelize.define('state', {
   },
 })
 
-State.sync({force: true}).then(function () {
-  State.create({
-    uid: "tesinf",
-    lastid: 1
-  })
-})
+// State.sync({force: true}).then(function () {
+//   State.create({
+//     uid: "tesinf",
+//     lastid: 1
+//   })
+// })
 
 // State.destroy({
 //   where: {},

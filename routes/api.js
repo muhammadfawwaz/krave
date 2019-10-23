@@ -29,7 +29,7 @@ router.get('/create', function(req, res, next) {
     //         id: 3
     //     }
     // })
-    db.State.findAll().then(dbresult => {
+    db.User.findAll().then(dbresult => {
         res.send(dbresult);
     })
 });
@@ -233,7 +233,7 @@ router.get('/readitinerary', async function(req, res, next) {
         let arrRes = []
         if(findRes.length > 0) {
             for(var val in findRes) {
-                console.log(findRes[val])
+                // console.log(findRes[val])
                 if(findRes[val].place_id.length > 0) {
                     arrRes.push(findRes[val])
                 }

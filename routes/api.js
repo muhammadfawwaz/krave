@@ -184,6 +184,107 @@ router.get('/edituserdata', async function(req, res, next) {
     })
 })
 
+router.get('/deleteitinerary', async function(req, res, next) {
+    await db.User.destroy({
+      where: {
+        uid: req.query.uid,
+        id: req.query.id
+      },
+    })
+    res.send({
+        result: 'ok'
+    })
+})
+
+router.get('/changeitinerary', async function(req, res, next) {
+    await db.User.update({
+        status: 'history'
+    }, {
+        where: {
+            uid: req.query.uid,
+            id: req.query.id
+        }
+    })
+    res.send({
+        result: 'ok'
+    })
+})
+
+router.get('/historyitinerary', async function(req, res, next) {
+    db.User.findAll({
+        where: {
+            uid: req.query.uid,
+            status: 'history'
+        }
+    }).then(findRes => {
+        res.send({
+            result: 'ok'
+    })
+})
+
+router.get('/readitinerary', async function(req, res, next) {
+    db.User.findAll({
+        where: {
+            uid: req.query.uid,
+            status: null
+        }
+    }).then(findRes => {
+        let arrRes = []
+        if(findRes.length > 0) {
+            for(var val in findRes) {
+                console.log(findRes[val])
+                if(findRes[val].place_id.length > 0) {
+                    arrRes.push(findRes[val])
+                }
+            }
+            res.send({
+                result: arrRes
+            })
+        }
+        else {
+            res.send({
+                result: 'ok'
+            })
+        }
+    })
+})
+
+router.get('/readdetailitinerary', async function(req, res, next) {
+    db.User.findOne({
+        where: {
+            uid: req.query.uid,
+            id: req.query.id,
+            status: null
+        }
+    }).then(async(findRes) => {
+        let arrRes = []
+        console.log(findRes.place_id)
+        if(findRes) {
+            for(var i = 0 ; i <  findRes.place_id.length; i++) {
+                await request.get({
+                    headers: {
+                      'Accept': 'application/json'
+                    },
+                    url:     'https://maps.googleapis.com/maps/api/place/details/json?place_id=' + findRes.place_id[i] + '&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
+                }, async function(error, response, body){
+                    // console.log(JSON.parse(body).result)
+                    arrRes.push(JSON.parse(body).result)
+                    if(arrRes.length == findRes.place_id.length) {
+                        res.send({
+                            result: arrRes
+                        })
+                    }
+                })
+            }
+        }
+        else {
+            res.send({
+                result: 'ok'
+            })
+        }
+    })
+})
+
 function editUserData(uid,col,val,id) {
     if(col == 'add') {
         db.User.findOne({

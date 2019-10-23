@@ -159,17 +159,20 @@ router.get('/getdetail', async function(req, res, next) {
 
 router.get('/getindex', async function(req, res, next) {
     console.log(req.query)
-    db.User.findAll({
+    db.State.findOne({
         where: {
             uid: req.query.uid
         }
     }).then(async (dbresult) => {
-        if(dbresult) return res.send({
-            result: dbresult.length-1
-        })
         return res.send({
-            result: ''
+            result: dbresult.id
         })
+        // if(dbresult) return res.send({
+        //     result: dbresult.length-1
+        // })
+        // return res.send({
+        //     result: ''
+        // })
     })
 })
 
@@ -201,6 +204,11 @@ function editUserData(uid,col,val,id) {
             uid: uid,
             place_id: [],
             method: val
+        }).then(dbcreate => {
+            db.State.create({
+                uid: uid,
+                lastid: dbcreate.id
+            })
         })
     }
     else {

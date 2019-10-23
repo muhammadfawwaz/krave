@@ -33,11 +33,21 @@ var User = sequelize.define('user', {
     },
 });
 
-// User.sync({force: true}).then(function () {
-//   User.create({
+var State = sequelize.define('state', {
+  uid: {
+    type: Sequelize.STRING,
+  },
+  lastid: {
+    type: Sequelize.STRING,
+  },
+})
+
+// State.sync({force: true}).then(function () {
+//   State.create({
 //     uid: "tesinf",
-//     place_id: []
+//     lastid: 1
 //   })
 // })
 
 exports.User = User
+exports.State = State

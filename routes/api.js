@@ -205,6 +205,7 @@ function editUserData(uid,col,val,id) {
             place_id: [],
             method: val
         }).then(dbcreate => {
+            console.log(dbcreate)
             db.State.create({
                 uid: uid,
                 lastid: dbcreate.id

@@ -29,7 +29,7 @@ router.get('/create', function(req, res, next) {
     //         id: 3
     //     }
     // })
-    db.User.findAll().then(dbresult => {
+    db.State.findAll().then(dbresult => {
         res.send(dbresult);
     })
 });
@@ -136,7 +136,7 @@ router.get('/addplace', function(req, res, next) {
 });
 
 router.get('/getdetail', async function(req, res, next) {
-    db.User.findOne({
+    db.State.findOne({
         where: {
             uid: req.query.uid
         }
@@ -330,6 +330,15 @@ function editUserData(uid,col,val,id) {
             })
         })
     }
+    else if (col == 'placestate'){
+        db.State.update({
+            place_state: val
+        }, {
+            where: {
+                uid: uid,
+            }
+        })
+    }
     else {
         let msg = {}
         if(col == 'title') {
@@ -355,11 +364,6 @@ function editUserData(uid,col,val,id) {
         else if (col == 'budget'){
             msg = {
                 method: val
-            }
-        }
-        else if (col == 'placestate'){
-            msg = {
-                place_state: val
             }
         }
         

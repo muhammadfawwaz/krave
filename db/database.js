@@ -40,14 +40,17 @@ var State = sequelize.define('state', {
   lastid: {
     type: Sequelize.STRING,
   },
+  place_state: {
+    type: Sequelize.STRING,
+  },
 })
 
-// State.sync({force: true}).then(function () {
-//   State.create({
-//     uid: "tesinf",
-//     lastid: 1
-//   })
-// })
+State.sync({force: true}).then(function () {
+  State.create({
+    uid: "tesinf",
+    lastid: 1
+  })
+})
 
 // State.destroy({
 //   where: {},

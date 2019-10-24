@@ -421,6 +421,7 @@ router.get('/getflightprice', async function(req, res, next) {
         departureDate : req.query.date.split('T')[0],
         currency: 'IDR'
       }).then(response => {
+          console.log(response)
         //   console.log(response.result)
         //   res.send(response.result.data[0].offerItems[0].pricePerAdult)
         let finalResult = []
@@ -447,7 +448,7 @@ router.get('/getflightprice', async function(req, res, next) {
         res.send({
             list: finalResult
         })
-      })
+      }).catch(x => console.log(x))
 })
 
 router.get('/getcity', async function(req, res, next) {
@@ -548,6 +549,12 @@ function editUserData(uid,col,val,id) {
         db.User.create({
             uid: uid,
             place_id: [],
+            flightname: [],
+            flightprice: [],
+            hotelname: [],
+            hotelprice: [],
+            fnbname: [],
+            fnbprice: [],
             method: val
         }).then(dbcreate => {
             db.State.findOne({

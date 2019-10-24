@@ -596,6 +596,11 @@ function editUserData(uid,col,val,id) {
                 title: val
             }
         }
+        else if (col == 'budget'){
+            msg = {
+                budget: val
+            }
+        }
         else if (col == 'latlon'){
             msg = {
                 latlon: val

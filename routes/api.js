@@ -291,6 +291,7 @@ router.get('/historyitinerary', async function(req, res, next) {
 })
 
 router.get('/insertbudget', async function(req, res, next) {
+    console.log(req.query)
     db.User.update({
         budget: req.query.budget,
         departure: req.query.dep,

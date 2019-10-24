@@ -603,7 +603,7 @@ function editUserData(uid,col,val,id) {
         }
         else if (col == 'latlon'){
             msg = {
-                latlon: val
+                latlonto: val
             }
         }
         else if (col == 'date'){

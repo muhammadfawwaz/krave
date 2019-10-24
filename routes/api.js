@@ -270,6 +270,54 @@ router.get('/findiata', async function(req, res, next) {
 
 })
 
+router.get('/getfnb', async function(req, res, next) {
+    await request.get({
+        headers: {
+          'Accept': 'application/json',
+        //   'Content-Type': 'application/x-www-form-urlencoded',
+          "user-key": "4a52b358563c7e83a2e3921d575f3fee"
+        },  
+        url:     'https://developers.zomato.com/api/v2.1/search?lat=' + req.query.lat + '&lon=' + req.query.lon,
+    }, async function(error, response, body){
+        let resto = JSON.parse(body).restaurants
+        let result = []
+        for(var i in resto) {
+            result.push({
+                name: resto[i].restaurant.name,
+                address: resto[i].restaurant.location.address,
+                cuisines: resto[i].restaurant.cuisines,
+                cost: resto[i].restaurant.average_cost_for_two
+            })
+        }
+        res.send({
+            list: result
+        })
+    })
+
+})
+
+router.get('/gethotelprice', async function(req, res, next) {
+    var Amadeus = require('amadeus');
+
+    var amadeus = new Amadeus({
+    clientId: 'OQmBTXhl1ztG6M3OdQnGxXNfO49haDPs',
+    clientSecret: 'nVu17AE2JsbeBFWQ'
+    });
+
+    // console.log(req.query.date.split('T')[0])
+    console.log(parseFloat(req.query.lat))
+    amadeus.shopping.hotelOffers.get({
+        latitude : parseFloat(req.query.lat),
+        longitude : parseFloat(req.query.lon),
+        roomQuantity: 1,
+        adults: 2,
+        // departureDate : req.query.date.split('T')[0],
+        currency: 'IDR'
+      }).then(response => {
+        res.send(response)
+      })
+})
+
 router.get('/getflightprice', async function(req, res, next) {
     var Amadeus = require('amadeus');
 

@@ -278,6 +278,8 @@ router.get('/getflightprice', async function(req, res, next) {
     clientSecret: 'nVu17AE2JsbeBFWQ'
     });
 
+    console.log(req.query.date.split('T')[0])
+
     amadeus.shopping.flightOffers.get({
         origin : req.query.from,
         destination : req.query.to,

@@ -299,7 +299,7 @@ router.get('/getflightprice', async function(req, res, next) {
                 // console.log(over[j].flightSegment.departure.iataCode)
                 code += over[j].flightSegment.departure.iataCode + ' - ' + over[j].flightSegment.arrival.iataCode + ', '
                 flightcode += over[j].flightSegment.carrierCode + ', '
-                flightname += over[j].flightSegment.aircraft.code + ', '
+                flightname = over[j].flightSegment.aircraft.code == 'GA' ? 'Garuda Indonesia' : over[j].flightSegment.aircraft.code
             }
             finalResult.push({
                 code: code,
@@ -326,7 +326,7 @@ router.get('/getcity', async function(req, res, next) {
         for(var i in com) {
             console.log(com[i].types[0] == 'administrative_area_level_2')
             if(com[i].types[0] == 'administrative_area_level_2') {
-                if(com[i].long_name.split(' ')[0] == 'Kota') {
+                if(com[i].long_name.split(' ')[0] == 'Kota' || com[i].long_name.split(' ')[0] == 'Kabupaten') {
                     city = com[i].long_name.split(' ')[1]
                 }
             }

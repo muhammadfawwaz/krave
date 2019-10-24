@@ -286,7 +286,8 @@ router.get('/getfnb', async function(req, res, next) {
                 name: resto[i].restaurant.name,
                 address: resto[i].restaurant.location.address,
                 cuisines: resto[i].restaurant.cuisines,
-                cost: resto[i].restaurant.average_cost_for_two
+                cost: resto[i].restaurant.average_cost_for_two,
+                photo: resto[i].restaurant.thumb
             })
         }
         res.send({

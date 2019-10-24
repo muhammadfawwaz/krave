@@ -31,6 +31,24 @@ var User = sequelize.define('user', {
     place_state: {
       type: Sequelize.STRING,
     },
+    flightname: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    flightprice: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    hotelname: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    hotelprice: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    fnbname: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    fnbprice: {
+      type: Sequelize.ARRAY(Sequelize.STRING)
+    },
 });
 
 var State = sequelize.define('state', {

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db/database');
 const request = require('request');
+// import single  from 'air-port-codes-node';
 
 /* GET users listing. */
 router.get('/getplace', async (req,res) => {
@@ -250,6 +251,83 @@ router.get('/readitinerary', async function(req, res, next) {
     })
 })
 
+router.get('/findiata', async function(req, res, next) {
+    await request.post({
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'APC-Auth': '420861f4d9',
+          'APC-Auth-Secret': '24eb1e281755d62'
+        },
+        url:     'https://www.air-port-codes.com/api/v1/multi',
+        form: {
+            limit: 7,
+            term: req.query.loc
+        }
+    }, async function(error, response, body){
+        res.send(body)
+    })
+
+})
+
+router.get('/getflightprice', async function(req, res, next) {
+    var Amadeus = require('amadeus');
+
+    var amadeus = new Amadeus({
+    clientId: 'OQmBTXhl1ztG6M3OdQnGxXNfO49haDPs',
+    clientSecret: 'nVu17AE2JsbeBFWQ'
+    });
+
+    amadeus.shopping.flightOffers.get({
+        origin : req.query.from,
+        destination : req.query.to,
+        departureDate : req.query.date
+      }).then(response => {
+        //   console.log(response.result)
+        //   res.send(response.result.data[0].offerItems[0].pricePerAdult)
+        res.send({
+            list: response.result.data[0]
+        })
+      })
+})
+
+router.get('/getcity', async function(req, res, next) {
+    await request.get({
+        headers: {
+          'Accept': 'application/json'
+        },
+        url:     'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + req.query.lat + ',' + req.query.lon + '&key=AIzaSyBXA-NtEXB55XNuh695WEXRn1F9sNOyONs',
+    }, async function(error, response, body){
+        let city = ''
+        let com = JSON.parse(body).results[0].address_components
+        for(var i in com) {
+            console.log(com[i].types[0] == 'administrative_area_level_2')
+            if(com[i].types[0] == 'administrative_area_level_2') {
+                if(com[i].long_name.split(' ')[0] == 'Kota') {
+                    city = com[i].long_name.split(' ')[1]
+                }
+            }
+        }
+        await request.post({
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'APC-Auth': '420861f4d9',
+              'APC-Auth-Secret': '24eb1e281755d62'
+            },
+            url:     'https://www.air-port-codes.com/api/v1/multi',
+            form: {
+                limit: 7,
+                term: city
+            }
+        }, async function(error, response, body){
+            res.send({
+                iat: JSON.parse(body).airports[0].iata
+            })
+        })
+    })
+})
+
 router.get('/readdetailitinerary', async function(req, res, next) {
     db.User.findOne({
         where: {
@@ -296,7 +374,13 @@ function editUserData(uid,col,val,id) {
             if(!findRes) {
                 db.User.create({
                     uid: uid,
-                    place_id: []
+                    place_id: [],
+                    flightname: [],
+                    flightprice: [],
+                    hotelname: [],
+                    hotelprice: [],
+                    fnbname: [],
+                    fnbprice: []
                 })
             }
         })

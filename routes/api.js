@@ -115,20 +115,86 @@ router.get('/addplace', function(req, res, next) {
             id: req.query.id
         }
     }).then(async (dbresult) => {
-        console.log(dbresult.place_id.indexOf(req.query.placeid) == -1)
-        console.log(dbresult.place_id)
-        if(dbresult.place_id.indexOf(req.query.placeid) == -1) {
-            dbresult.place_id.push(req.query.placeid)
-            await dbresult.update({
-                place_id: dbresult.place_id
-            }, {
-                where: {
-                    uid: req.query.uid
+        // console.log(dbresult.place_id.indexOf(req.query.placeid) == -1)
+        // console.log(dbresult.place_id)
+        let col = []
+        let price = []
+        if(req.query.col == "addplace") {
+            col = dbresult.place_id
+            if(col.indexOf(req.query.val) == -1) {
+                col.push(req.query.val)
+                await dbresult.update({
+                    place_id: col
+                }, {
+                    where: {
+                        uid: req.query.uid,
+                        id: req.query.id
+                    }
+                }).then(updateRes => {
+                    // console.log(updateRes)
+                    // return res.send(updateRes)
+                })
+            }
+        }
+        else {
+            let msg = {}
+            if(req.query.col == "addflight") {
+                col = dbresult.flightname
+                if(col.indexOf(req.query.val) == -1) {
+                    col.push(req.query.val)
+                    dbresult.flightprice.push(req.query.price)
+                    await dbresult.update({
+                        flightname: col,
+                        flightprice: dbresult.flightprice
+                    }, {
+                        where: {
+                            uid: req.query.uid,
+                            id: req.query.id
+                        }
+                    }).then(updateRes => {
+                        // console.log(updateRes)
+                        // return res.send(updateRes)
+                    })
                 }
-            }).then(updateRes => {
-                // console.log(updateRes)
-                // return res.send(updateRes)
-            })
+            }
+            else if(req.query.col == "addhotel") {
+                col = dbresult.hotelname
+                if(col.indexOf(req.query.val) == -1) {
+                    col.push(req.query.val)
+                    dbresult.hotelprice.push(req.query.price)
+                    await dbresult.update({
+                        hotelname: col,
+                        hotelprice: dbresult.hotelprice
+                    }, {
+                        where: {
+                            uid: req.query.uid,
+                            id: req.query.id
+                        }
+                    }).then(updateRes => {
+                        // console.log(updateRes)
+                        // return res.send(updateRes)
+                    })
+                }
+            }
+            else if(req.query.col == "addFnb") {
+                col = dbresult.fnbname
+                if(col.indexOf(req.query.val) == -1) {
+                    col.push(req.query.val)
+                    dbresult.fnbprice.push(req.query.price)
+                    await dbresult.update({
+                        fnbname: col,
+                        fnbprice: dbresult.fnbprice
+                    }, {
+                        where: {
+                            uid: req.query.uid,
+                            id: req.query.id
+                        }
+                    }).then(updateRes => {
+                        // console.log(updateRes)
+                        // return res.send(updateRes)
+                    })
+                }
+            }
         }
         return res.send({
             result: 'ok'
@@ -221,6 +287,25 @@ router.get('/historyitinerary', async function(req, res, next) {
         res.send({
             result: 'ok'
         })
+    })
+})
+
+router.get('/insertbudget', async function(req, res, next) {
+    db.User.update({
+        budget: req.query.budget,
+        departure: req.query.dep,
+        arrival: req.query.arr,
+        title: req.query.title,
+        latlonfrom: req.query.locfrom,
+        latlonto: req.query.locto,
+    }, {
+        where: {
+            uid: req.query.uid,
+            id: req.query.id
+        }
+    })
+    res.send({
+        result: 'ok'
     })
 })
 

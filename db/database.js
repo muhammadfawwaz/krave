@@ -25,10 +25,19 @@ var User = sequelize.define('user', {
     budget: {
       type: Sequelize.STRING
     },
-    latlon: {
+    latlonfrom: {
+      type: Sequelize.STRING
+    },
+    latlonto: {
       type: Sequelize.STRING
     },
     place_state: {
+      type: Sequelize.STRING,
+    },
+    departure: {
+      type: Sequelize.STRING,
+    },
+    arrival: {
       type: Sequelize.STRING,
     },
     flightname: {
@@ -73,6 +82,24 @@ var State = sequelize.define('state', {
 // State.destroy({
 //   where: {},
 //   truncate: true
+// })
+
+// User.destroy({
+//   where: {},
+//   truncate: true
+// })
+
+// State.sync({force: true}).then(function () {
+//   State.create({
+//     uid: "tesinf",
+//     lastid: 1
+//   })
+// })
+
+// User.sync({force: true}).then(function () {
+//   User.create({
+//     uid: "tesinf",
+//   })
 // })
 
 exports.User = User

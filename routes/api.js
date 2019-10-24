@@ -493,6 +493,7 @@ router.get('/readdetailitinerary', async function(req, res, next) {
         where: {
             uid: req.query.uid,
             id: req.query.id,
+            method: 'nearby',
             status: null
         }
     }).then(async(findRes) => {

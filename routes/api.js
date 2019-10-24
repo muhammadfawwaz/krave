@@ -281,12 +281,33 @@ router.get('/getflightprice', async function(req, res, next) {
     amadeus.shopping.flightOffers.get({
         origin : req.query.from,
         destination : req.query.to,
-        departureDate : req.query.date
+        departureDate : req.query.date.split('T')[0]
       }).then(response => {
         //   console.log(response.result)
         //   res.send(response.result.data[0].offerItems[0].pricePerAdult)
+        let finalResult = []
+        let result = response.result.data
+        for(var i in result) {
+            let code = ''
+            let flightcode = ''
+            let flightname = ''
+            let over = result[i].offerItems[0].services[0].segments
+            // console.log(result[i].offerItems[0].services[0])
+            for(var j in over) {
+                // console.log(over[j].flightSegment.departure.iataCode)
+                code += over[j].flightSegment.departure.iataCode + ' - ' + over[j].flightSegment.arrival.iataCode + ', '
+                flightcode += over[j].flightSegment.carrierCode + ', '
+                flightname += over[j].flightSegment.aircraft.code + ', '
+            }
+            finalResult.push({
+                code: code,
+                price: result[i].offerItems[0].pricePerAdult.total,
+                flightcode: flightcode,
+                flightname: flightname
+            })
+        }
         res.send({
-            list: response.result.data[0]
+            list: finalResult
         })
       })
 })

@@ -121,8 +121,8 @@ router.get('/addplace', function(req, res, next) {
         let price = []
         if(req.query.col == "addplace") {
             col = dbresult.place_id
-            if(col.indexOf(req.query.val) == -1) {
-                col.push(req.query.val)
+            if(col.indexOf(req.query.placeid) == -1) {
+                col.push(req.query.placeid)
                 await dbresult.update({
                     place_id: col
                 }, {

@@ -10,7 +10,7 @@ router.get('/getplace', async (req,res) => {
         headers: {
           'Accept': 'application/json'
         },
-        url:     'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + req.query.lat + ',' + req.query.lon + '&radius=10000&type=park&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
+        url:     'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + req.query.lat + ',' + req.query.lon + '&radius=10000&type=' + req.query.type + '&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
     }, async function(error, response, body){
       // console.log(JSON.parse(body).results)
       let objRes = {

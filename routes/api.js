@@ -138,6 +138,11 @@ router.get('/addplace', function(req, res, next) {
                     })
                 })
             }
+            else {
+                return res.send({
+                    result: 'ok'
+                })
+            }
         }
         else {
             let msg = {}
@@ -163,6 +168,11 @@ router.get('/addplace', function(req, res, next) {
                         })
                     })
                 }
+                else {
+                    return res.send({
+                        result: 'ok'
+                    })
+                }
             }
             else if(req.query.col == "addhotel") {
                 col = dbresult.hotelname
@@ -186,6 +196,11 @@ router.get('/addplace', function(req, res, next) {
                         })
                     })
                 }
+                else {
+                    return res.send({
+                        result: 'ok'
+                    })
+                }
             }
             else if(req.query.col == "addFnb") {
                 col = dbresult.fnbname
@@ -207,6 +222,11 @@ router.get('/addplace', function(req, res, next) {
                         return res.send({
                             result: updateRes.budget
                         })
+                    })
+                }
+                else {
+                    return res.send({
+                        result: 'ok'
                     })
                 }
             }

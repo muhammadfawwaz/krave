@@ -417,7 +417,7 @@ router.get('/getfnb', async function(req, res, next) {
                         cuisines: resto[i].restaurant.cuisines,
                         price: resto[i].restaurant.average_cost_for_two,
                         photo: resto[i].restaurant.thumb,
-                        id: resto[i].id
+                        id: resto[i].restaurant.id
                     })
                 }
             }

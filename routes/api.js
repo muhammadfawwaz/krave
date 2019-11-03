@@ -381,7 +381,7 @@ router.get('/getfnb', async function(req, res, next) {
             //   'Content-Type': 'application/x-www-form-urlencoded',
               "user-key": "4a52b358563c7e83a2e3921d575f3fee"
             },  
-            url:     'https://developers.zomato.com/api/v2.1/search?entity_id=city&q=' + req.query.loc,
+            url:     'https://developers.zomato.com/api/v2.1/search?entity_type=city&q=' + req.query.loc,
         }, async function(error, response, body){
             let resto = JSON.parse(body).restaurants
             let result = []

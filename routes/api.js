@@ -386,7 +386,7 @@ router.get('/getfnb', async function(req, res, next) {
             let resto = JSON.parse(body).restaurants
             let result = []
             for(var i in resto) {
-                console.log(parseInt(resto[i].restaurant.average_cost_for_two))
+                // console.log(parseInt(resto[i].restaurant.average_cost_for_two))
                 if(parseInt(resto[i].restaurant.average_cost_for_two) < parseInt(dbresult.budget)) {
                     result.push({
                         name: resto[i].restaurant.name,
@@ -394,7 +394,7 @@ router.get('/getfnb', async function(req, res, next) {
                         lat: resto[i].restaurant.location.latitude,
                         lon: resto[i].restaurant.location.longitude,
                         cuisines: resto[i].restaurant.cuisines,
-                        cost: resto[i].restaurant.average_cost_for_two,
+                        price: resto[i].restaurant.average_cost_for_two,
                         photo: resto[i].restaurant.thumb
                     })
                 }

@@ -298,7 +298,7 @@ router.get('/insertbudget', async function(req, res, next) {
         arrival: req.query.arr,
         title: req.query.title,
         latlonfrom: req.query.locfrom,
-        latlonto: req.query.locto,
+        date: req.query.locto,
     }, {
         where: {
             uid: req.query.uid,
@@ -415,40 +415,63 @@ router.get('/getflightprice', async function(req, res, next) {
 
     console.log(req.query.date.split('T')[0])
 
-    amadeus.shopping.flightOffers.get({
-        origin : req.query.from,
-        destination : req.query.to,
-        departureDate : req.query.date.split('T')[0],
-        currency: 'IDR'
-      }).then(response => {
-          console.log(response)
-        //   console.log(response.result)
-        //   res.send(response.result.data[0].offerItems[0].pricePerAdult)
-        let finalResult = []
-        let result = response.result.data
-        for(var i in result) {
-            let code = ''
-            let flightcode = ''
-            let flightname = ''
-            let over = result[i].offerItems[0].services[0].segments
-            // console.log(result[i].offerItems[0].services[0])
-            for(var j in over) {
-                // console.log(over[j].flightSegment.departure.iataCode)
-                code += over[j].flightSegment.departure.iataCode + ' - ' + over[j].flightSegment.arrival.iataCode + ', '
-                flightcode += over[j].flightSegment.carrierCode + ', '
-                flightname = over[j].flightSegment.aircraft.code == 'GA' ? 'Garuda Indonesia' : over[j].flightSegment.aircraft.code
-            }
-            finalResult.push({
-                code: code,
-                price: result[i].offerItems[0].pricePerAdult.totalTaxes,
-                flightcode: flightcode,
-                flightname: flightname
-            })
+    db.User.findOne({
+        where: {
+            uid: req.query.uid,
+            id: req.query.id
         }
-        res.send({
-            list: finalResult
-        })
-      }).catch(x => console.log(x))
+    }).then(findRes => {
+        var budget = parseInt(findRes.budget)
+        amadeus.shopping.flightOffers.get({
+            origin : req.query.from,
+            destination : req.query.to,
+            departureDate : req.query.date.split('T')[0],
+            currency: 'IDR'
+          }).then(response => {
+            //   console.log(response)
+            //   console.log(response.result)
+            //   res.send(response.result.data[0].offerItems[0].pricePerAdult)
+            
+            let finalResult = []
+            let result = response.result.data
+            for(var i in result) {
+                if(parseInt(result[i].offerItems[0].pricePerAdult.totalTaxes) < budget) {
+                    let code = ''
+                let flightcode = ''
+                let flightname = ''
+                let over = result[i].offerItems[0].services[0].segments
+                // console.log(result[i].offerItems[0].services[0])
+                for(var j in over) {
+                    // console.log(over[j].flightSegment.departure.iataCode)
+                    code += over[j].flightSegment.departure.iataCode + ' - ' + over[j].flightSegment.arrival.iataCode + ', '
+                    flightcode += over[j].flightSegment.carrierCode == 'GA' ? 'Garuda, ' : over[j].flightSegment.carrierCode + ', '
+                    flightname = over[j].flightSegment.number
+                }
+                finalResult.push({
+                    code: code,
+                    price: result[i].offerItems[0].pricePerAdult.totalTaxes,
+                    flightcode: flightcode,
+                    flightname: flightname
+                })
+                }
+                
+            }
+            res.send({
+                list: finalResult
+            })
+          }).catch({})
+    })
+})
+
+router.get('/checknum', async function(req, res, next) {
+    var result = false
+    console.log(req.query.num)
+    if(Number.isInteger(req.query.num)) {
+        result = true
+    }
+    return res.send({
+        result
+    })
 })
 
 router.get('/getcity', async function(req, res, next) {

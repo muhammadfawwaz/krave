@@ -401,10 +401,10 @@ router.get('/getfnb', async function(req, res, next) {
             //   'Content-Type': 'application/x-www-form-urlencoded',
               "user-key": "4a52b358563c7e83a2e3921d575f3fee"
             },  
-            url:     'https://developers.zomato.com/api/v2.1/search?entity_type=city&count=6&entity_id=' + req.query.loc,
+            url:     'https://developers.zomato.com/api/v2.1/search?entity_type=city&count=8&entity_id=' + req.query.loc,
         }, async function(error, response, body){
             // console.log(body)
-            let resto = body.restaurants
+            let resto = JSON.parse(body).restaurants
             let result = []
             for(var i in resto) {
                 // console.log(parseInt(resto[i].restaurant.average_cost_for_two))

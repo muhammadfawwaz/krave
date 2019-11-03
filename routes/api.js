@@ -397,7 +397,7 @@ router.get('/getfnb', async function(req, res, next) {
     }).then(async dbresult => {
         await request.get({
             headers: {
-              'Accept': 'application/json',
+            //   'Accept': 'application/json',
             //   'Content-Type': 'application/x-www-form-urlencoded',
               "user-key": "4a52b358563c7e83a2e3921d575f3fee"
             },  

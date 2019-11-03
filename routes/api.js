@@ -202,7 +202,7 @@ router.get('/addplace', function(req, res, next) {
                     })
                 }
             }
-            else if(req.query.col == "addFnb") {
+            else if(req.query.col == "addfnb") {
                 col = dbresult.fnbname
                 if(col.indexOf(req.query.val) == -1) {
                     col.push(req.query.val)

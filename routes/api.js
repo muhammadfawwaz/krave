@@ -133,6 +133,9 @@ router.get('/addplace', function(req, res, next) {
                 }).then(updateRes => {
                     // console.log(updateRes)
                     // return res.send(updateRes)
+                    return res.send({
+                        result: 'ok'
+                    })
                 })
             }
         }
@@ -155,6 +158,9 @@ router.get('/addplace', function(req, res, next) {
                     }).then(updateRes => {
                         // console.log(updateRes)
                         // return res.send(updateRes)
+                        return res.send({
+                            result: updateRes.budget
+                        })
                     })
                 }
             }
@@ -165,7 +171,8 @@ router.get('/addplace', function(req, res, next) {
                     dbresult.hotelprice.push(req.query.price)
                     await dbresult.update({
                         hotelname: col,
-                        hotelprice: dbresult.hotelprice
+                        hotelprice: dbresult.hotelprice,
+                        budget: (parseInt(dbresult.budget) - parseInt(req.query.price)).toString()
                     }, {
                         where: {
                             uid: req.query.uid,
@@ -174,6 +181,9 @@ router.get('/addplace', function(req, res, next) {
                     }).then(updateRes => {
                         // console.log(updateRes)
                         // return res.send(updateRes)
+                        return res.send({
+                            result: updateRes.budget
+                        })
                     })
                 }
             }
@@ -184,7 +194,8 @@ router.get('/addplace', function(req, res, next) {
                     dbresult.fnbprice.push(req.query.price)
                     await dbresult.update({
                         fnbname: col,
-                        fnbprice: dbresult.fnbprice
+                        fnbprice: dbresult.fnbprice,
+                        budget: (parseInt(dbresult.budget) - parseInt(req.query.price)).toString()
                     }, {
                         where: {
                             uid: req.query.uid,
@@ -193,13 +204,13 @@ router.get('/addplace', function(req, res, next) {
                     }).then(updateRes => {
                         // console.log(updateRes)
                         // return res.send(updateRes)
+                        return res.send({
+                            result: updateRes.budget
+                        })
                     })
                 }
             }
         }
-        return res.send({
-            result: 'ok'
-        })
     })
 });
 
@@ -358,27 +369,38 @@ router.get('/findiata', async function(req, res, next) {
 })
 
 router.get('/getfnb', async function(req, res, next) {
-    await request.get({
-        headers: {
-          'Accept': 'application/json',
-        //   'Content-Type': 'application/x-www-form-urlencoded',
-          "user-key": "4a52b358563c7e83a2e3921d575f3fee"
-        },  
-        url:     'https://developers.zomato.com/api/v2.1/search?lat=' + req.query.lat + '&lon=' + req.query.lon,
-    }, async function(error, response, body){
-        let resto = JSON.parse(body).restaurants
-        let result = []
-        for(var i in resto) {
-            result.push({
-                name: resto[i].restaurant.name,
-                address: resto[i].restaurant.location.address,
-                cuisines: resto[i].restaurant.cuisines,
-                cost: resto[i].restaurant.average_cost_for_two,
-                photo: resto[i].restaurant.thumb
-            })
+    db.User.findOne({
+        where: {
+            uid: req.query.uid,
+            id: req.query.id
         }
-        res.send({
-            list: result
+    }).then(dbresult => {
+        await request.get({
+            headers: {
+              'Accept': 'application/json',
+            //   'Content-Type': 'application/x-www-form-urlencoded',
+              "user-key": "4a52b358563c7e83a2e3921d575f3fee"
+            },  
+            url:     'https://developers.zomato.com/api/v2.1/search?entity_id=city&q=' + req.query.loc,
+        }, async function(error, response, body){
+            let resto = JSON.parse(body).restaurants
+            let result = []
+            for(var i in resto) {
+                if(parseInt(resto[i].restaurant.average_cost_for_two) < parseInt(dbresult.budget)) {
+                    result.push({
+                        name: resto[i].restaurant.name,
+                        address: resto[i].restaurant.location.address,
+                        lat: resto[i].restaurant.location.latitude,
+                        lon: resto[i].restaurant.location.longitude,
+                        cuisines: resto[i].restaurant.cuisines,
+                        cost: resto[i].restaurant.average_cost_for_two,
+                        photo: resto[i].restaurant.thumb
+                    })
+                }
+            }
+            res.send({
+                list: result
+            })
         })
     })
 
@@ -395,14 +417,24 @@ router.get('/gethotelprice', async function(req, res, next) {
     // console.log(req.query.date.split('T')[0])
     console.log(parseFloat(req.query.lat))
     amadeus.shopping.hotelOffers.get({
-        latitude : parseFloat(req.query.lat),
-        longitude : parseFloat(req.query.lon),
+        cityCode: 'JOG',
         roomQuantity: 1,
         adults: 2,
         // departureDate : req.query.date.split('T')[0],
         currency: 'IDR'
       }).then(response => {
-        res.send(response)
+          var result = {
+              name: response.result.data[0].hotel.name,
+              rating: response.result.data[0].hotel.rating,
+              lat: response.result.data[0].hotel.latitude,
+              lon: response.result.data[0].hotel.longitude,
+              address: response.result.data[0].hotel.address.lines[0],
+              phone: response.result.data[0].hotel.contact.phone,
+              price: parseInt(response.result.data[0].offers[0].price.total).toString()
+          }
+        res.send({
+            result: result
+        })
       })
 })
 

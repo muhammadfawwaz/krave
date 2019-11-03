@@ -374,7 +374,7 @@ router.get('/getfnb', async function(req, res, next) {
             uid: req.query.uid,
             id: req.query.id
         }
-    }).then(dbresult => {
+    }).then(async dbresult => {
         await request.get({
             headers: {
               'Accept': 'application/json',

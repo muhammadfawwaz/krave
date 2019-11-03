@@ -145,7 +145,8 @@ router.get('/addplace', function(req, res, next) {
                     dbresult.flightprice.push(req.query.price)
                     await dbresult.update({
                         flightname: col,
-                        flightprice: dbresult.flightprice
+                        flightprice: dbresult.flightprice,
+                        budget: (parseInt(dbresult.budget) - parseInt(req.query.price)).toString()
                     }, {
                         where: {
                             uid: req.query.uid,

@@ -456,9 +456,16 @@ router.get('/getflightprice', async function(req, res, next) {
                 }
                 
             }
-            res.send({
-                list: finalResult
-            })
+            if(finalResult.length == 0) {
+                return res.send({
+                    list: 'nothing'
+                })  
+            }
+            else {
+                res.send({
+                    list: finalResult
+                })
+            }
           }).catch({})
     })
 })

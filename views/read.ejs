@@ -51,7 +51,7 @@
                 document.getElementById('to').textContent = 'Tujuan: ' + ress.result.date
                 document.getElementById('dep').textContent = 'Tanggal Keberangkatan: ' + ress.result.departure.split('T')[0]
                 document.getElementById('arr').textContent = 'Tanggal Kepulangan: ' + ress.result.arrival.split('T')[0]
-                document.getElementById('flightone').textContent = 'Kode Penerbangan: ' + ress.result.flightname[0].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[0].split('-_-')[1] 
+                document.getElementById('flightone').textContent = 'Kode Penerbangan: ' + ress.result.flightname[0].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[0].split('-_-')[1] + '\nRute: ' + ress.result.flightname[0].split('-_-')[2] + '\nBandara Asal: ' + ress.result.flightname[0].split('-_-')[3] + '\nBandara Tujuan: ' + ress.result.flightname[0].split('-_-')[4] 
                 document.getElementById('flightwo').textContent = 'Kode Penerbangan: ' + ress.result.flightname[1].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[1].split('-_-')[1] + '\nRute: ' + ress.result.flightname[1].split('-_-')[2] + '\nBandara Asal: ' + ress.result.flightname[1].split('-_-')[3] + '\nBandara Tujuan: ' + ress.result.flightname[1].split('-_-')[4] + '\nHarga Tiket: ' + ress.result.flighprice[1]
                 document.getElementById('hotel').textContent = ress.result.hotelname[0] + '-' + ress.result.hotelprice[0]
                 document.getElementById('resto').textContent = ress.result.fnbname + '-' + ress.result.fnbprice

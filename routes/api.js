@@ -430,7 +430,7 @@ router.get('/getfnb', async function(req, res, next) {
             },  
             url:     'https://developers.zomato.com/api/v2.1/search?entity_type=city&count=8&entity_id=' + req.query.loc,
         }, async function(error, response, body){
-            console.log(body.restaurants)
+            console.log(body)
             // replace(/^\ufeff/g,"")
             let resto = JSON.parse(body.replace(/^\ufeff/g,"")).restaurants
             let result = []

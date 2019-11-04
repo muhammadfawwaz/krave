@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Detail</title>
 </head>
 <body>
-    <p id="teks" onclick="changeUid">aaaa</p>
+    <p id="tipe">Budget</p>
+    <p id="from">Dari</p>
+    <p id="to">To</p>
+    <p id="dep">Asal</p>
+    <p id="arr">Tujuan</p>
+    <p id="flightone">Pesawat Keberangkatan</p>
+    <p id="flightwo">Pesawat Kepulangan</p>
+    <p id="hotel">Hotel</p>
+    <p id="resto">Restoran</p>
+    <p id="wisata">Wisata</p>
+    <p id="budget">Budget Tersisa: </p>
 </body>
 </html>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
@@ -34,7 +44,17 @@
             fetch(url).then(function(data) {
                 return data.json()
             }).then(function(ress) {
-                document.getElementById('teks').textContent = ress.result.title
+                document.getElementById('tipe').textContent = ress.result.method
+                document.getElementById('from').textContent = ress.result.latlonfrom
+                document.getElementById('to').textContent = ress.result.date
+                document.getElementById('dep').textContent = ress.result.departure
+                document.getElementById('arr').textContent = ress.result.arrival
+                document.getElementById('flightone').textContent = ress.result.flightname[0]
+                document.getElementById('flightwo').textContent = ress.result.flightname[1]
+                document.getElementById('hotel').textContent = ress.result.hotelname[0] + '-' + ress.result.hotelprice[0]
+                document.getElementById('resto').textContent = ress.result.fnbname + '-' + ress.result.fnbprice
+                document.getElementById('wisata').textContent = ress.result.placeid
+                document.getElementById('budget').textContent = ress.result.budget
             })
         })
     })

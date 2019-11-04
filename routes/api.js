@@ -432,7 +432,7 @@ router.get('/getfnb', async function(req, res, next) {
         }, async function(error, response, body){
             console.log(body.restaurants)
             // replace(/^\ufeff/g,"")
-            let resto = JSON.parse(body).restaurants
+            let resto = JSON.parse(bodyreplace(/^\ufeff/g,"")).restaurants
             let result = []
             for(var i in resto) {
                 // console.log(parseInt(resto[i].restaurant.average_cost_for_two))

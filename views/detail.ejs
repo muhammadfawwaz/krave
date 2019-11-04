@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <img src="" alt="poto" id="photo" width="100" height="100">
+    <img src="" alt="poto" id="photo" width="300" height="300">
     <h2 id="name">Nama</h2>
     <p id="alamat">Nama</p>
     <p id="rating">Nama</p>
@@ -36,9 +36,9 @@
         }).then(function(res) {
             document.getElementById('name').textContent = res.result.name
             document.getElementById('photo').src = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + res.result.photos[0].photo_reference +'&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
-            document.getElementById('alamat').textContent = res.result.formatted_address
-            document.getElementById('rating').textContent = res.result.rating
-            document.getElementById('jam').textContent = res.result.opening_hours.weekday_text
+            document.getElementById('alamat').textContent = 'Alamat: ' + res.result.formatted_address
+            document.getElementById('rating').textContent = 'Rating: ' + res.result.rating
+            document.getElementById('jam').textContent = 'Jam Operasional: ' + res.result.opening_hours.weekday_text
         })
     })
 </script>

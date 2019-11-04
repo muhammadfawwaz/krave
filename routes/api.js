@@ -424,9 +424,9 @@ router.get('/getfnb', async function(req, res, next) {
     }).then(async dbresult => {
         await request.get({
             headers: {
-              'Accept': 'application/json',
+            //   'Accept': 'application/json',
             //   'Content-Type': 'application/x-www-form-urlencoded',
-              "user-key": "4a52b358563c7e83a2e3921d575f3fee"
+              "user-key": "9c6291ad721f27d002019cffb39988d9"
             },  
             url:     'https://developers.zomato.com/api/v2.1/search?entity_type=city&count=8&entity_id=' + req.query.loc,
         }, async function(error, response, body){

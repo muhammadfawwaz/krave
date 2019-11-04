@@ -36,11 +36,11 @@
     
     liff.getProfile().then(function(profile) {
         // document.getElementById('teks').textContent = profile.userId
-        var url = 'https://kravehack.herokuapp.com/api/getdetail?uid=' + profile.userId
+        var url = 'https://kravehack.herokuapp.com/api/getindex?uid=' + profile.userId
         fetch(url).then(function(data) {
             return data.json()
         }).then(function(res) {
-            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.result.id
+            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.result.lastid
             fetch(url).then(function(data) {
                 return data.json()
             }).then(function(ress) {

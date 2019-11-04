@@ -7,6 +7,7 @@
     <title>Detail</title>
 </head>
 <body>
+    <h1 id="title">Judul</h1>
     <p id="tipe">Budget</p>
     <p id="from">Dari</p>
     <p id="to">To</p>
@@ -44,13 +45,14 @@
             fetch(url).then(function(data) {
                 return data.json()
             }).then(function(ress) {
-                document.getElementById('tipe').textContent = ress.result.method
-                document.getElementById('from').textContent = ress.result.latlonfrom
-                document.getElementById('to').textContent = ress.result.date
-                document.getElementById('dep').textContent = ress.result.departure
-                document.getElementById('arr').textContent = ress.result.arrival
-                document.getElementById('flightone').textContent = ress.result.flightname[0]
-                document.getElementById('flightwo').textContent = ress.result.flightname[1]
+                document.getElementById('tipe').textContent = 'Tipe: ' + ress.result.method
+                document.getElementById('title').textContent = ress.result.title
+                document.getElementById('from').textContent = 'Asal: ' + ress.result.latlonfrom
+                document.getElementById('to').textContent = 'Tujuan: ' + ress.result.date
+                document.getElementById('dep').textContent = 'Tanggal Keberangkatan: ' + ress.result.departure.split('T')[0]
+                document.getElementById('arr').textContent = 'Tanggal Kepulangan: ' + ress.result.arrival.split('T')[0]
+                document.getElementById('flightone').textContent = 'Kode Penerbangan: ' + ress.result.flightname[0].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[0].split('-_-')[1] + '\nRute: ' + ress.result.flightname[0].split('-_-')[2] + '\nBandara Asal: ' + ress.result.flightname[0].split('-_-')[3] + '\nBandara Tujuan: ' + ress.result.flightname[0].split('-_-')[4] + '\nHarga Tiket: ' + ress.result.flighprice[0]
+                document.getElementById('flightwo').textContent = 'Kode Penerbangan: ' + ress.result.flightname[1].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[1].split('-_-')[1] + '\nRute: ' + ress.result.flightname[1].split('-_-')[2] + '\nBandara Asal: ' + ress.result.flightname[1].split('-_-')[3] + '\nBandara Tujuan: ' + ress.result.flightname[1].split('-_-')[4] + '\nHarga Tiket: ' + ress.result.flighprice[1]
                 document.getElementById('hotel').textContent = ress.result.hotelname[0] + '-' + ress.result.hotelprice[0]
                 document.getElementById('resto').textContent = ress.result.fnbname + '-' + ress.result.fnbprice
                 document.getElementById('wisata').textContent = ress.result.placeid

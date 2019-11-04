@@ -60,7 +60,7 @@
                 document.getElementById('flightwo').textContent = 'Pesawat Kepulangan: Kode Penerbangan: ' + ress.result.flightname[1].split('-_-')[0] + '\nMaskapai: ' + ress.result.flightname[1].split('-_-')[1] + '\nRute: ' + ress.result.flightname[1].split('-_-')[2] + '\nBandara Asal: ' + ress.result.flightname[1].split('-_-')[3] + '\nBandara Tujuan: ' + ress.result.flightname[1].split('-_-')[4] + '\nHarga Tiket: ' + ress.result.flightprice[1]
                 document.getElementById('hotel').textContent = ress.result.hotelname[0] + '-' + ress.result.hotelprice[0]
                 document.getElementById('resto').textContent = ress.result.fnbname + '-' + ress.result.fnbprice
-                document.getElementById('wisata').textContent = ress.result.placeid
+                document.getElementById('wisata').textContent = ress.result.place_id
                 document.getElementById('budget').textContent = ress.result.budget
             })
         })

@@ -30,11 +30,11 @@
         fetch(url).then(function(data) {
             return data.json()
         }).then(function(res) {
-            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.id
+            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.result.id
             fetch(url).then(function(data) {
                 return data.json()
-            }).then(function(res) {
-                document.getElementById('teks').textContent = res.result.title
+            }).then(function(ress) {
+                document.getElementById('teks').textContent = ress.result.title
             })
         })
     })

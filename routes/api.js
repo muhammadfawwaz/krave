@@ -62,9 +62,7 @@ router.get('/setstate', function(req, res, next) {
 })
 
 router.get('/read', function(req, res, next) {
-    db.User.findAll().then(dbresult => {
-        res.render('read')
-    })
+    res.render('read')
 });
 
 router.get('/detailstate', function(req, res, next) {

@@ -48,6 +48,25 @@ router.get('/updatestate', function(req, res, next) {
     })
 })
 
+router.get('/setstate', function(req, res, next) {
+    let uid = req.query.uid
+    let id = req.query.id
+
+    db.State.update({
+        lastid: id
+    }, {
+        where: {
+            uid: uid
+        }
+    })
+})
+
+router.get('/read', function(req, res, next) {
+    db.User.findAll().then(dbresult => {
+        res.render('read')
+    })
+});
+
 router.get('/detailstate', function(req, res, next) {
     db.User.findAll().then(dbresult => {
         res.render('detail',{result: dbresult})
@@ -234,6 +253,22 @@ router.get('/addplace', function(req, res, next) {
     })
 });
 
+router.get('/getejs', async function(req, res, next) {
+    let uid = req.query.uid
+    let id = req.query.id
+
+    db.User.findOne({
+        where: {
+            uid,
+            id
+        }
+    }).then(dbres => {
+        res.send({
+            result: dbres
+        })
+    })
+})
+
 router.get('/getdetail', async function(req, res, next) {
     db.State.findOne({
         where: {
@@ -351,14 +386,8 @@ router.get('/readitinerary', async function(req, res, next) {
     }).then(findRes => {
         let arrRes = []
         if(findRes.length > 0) {
-            for(var val in findRes) {
-                // console.log(findRes[val])
-                if(findRes[val].place_id.length > 0) {
-                    arrRes.push(findRes[val])
-                }
-            }
             res.send({
-                result: arrRes
+                result: findRes
             })
         }
         else {
@@ -446,6 +475,7 @@ router.get('/gethotelprice', async function(req, res, next) {
         // departureDate : req.query.date.split('T')[0],
         currency: 'IDR'
       }).then(response => {
+          console.log(response)
           var result = {
               name: response.result.data[0].hotel.name,
               rating: response.result.data[0].hotel.rating,

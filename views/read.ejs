@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <%= result %> -->
+    <p id="teks" onclick="changeUid">aaaa</p>
+</body>
+</html>
+<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+    liff
+        .init({
+            liffId: '1653349907-Zjr0gBlY'
+        })
+        .then(() => {
+            // start to use LIFF's api
+            initializeApp();
+        })
+        .catch((err) => {
+            
+        });
+    
+    liff.getProfile().then(function(profile) {
+        // document.getElementById('teks').textContent = profile.userId
+        var url = 'https://kravehack.herokuapp.com/api/getdetail?uid=' + profile.userId
+        fetch(url).then(function(data) {
+            return data.json()
+        }).then(function(res) {
+            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.id
+            fetch(url).then(function(data) {
+                return data.json()
+            }).then(function(res) {
+                document.getElementById('teks').textContent = res.result.title
+            })
+        })
+    })
+</script>

@@ -40,7 +40,7 @@
         fetch(url).then(function(data) {
             return data.json()
         }).then(function(res) {
-            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.result.lastid
+            var url = 'https://kravehack.herokuapp.com/api/getejs?uid=' + profile.userId + '&id=' + res.result
             fetch(url).then(function(data) {
                 return data.json()
             }).then(function(ress) {

@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <p id="teks" onclick="changeUid">aaaa</p>
+    <img src="" alt="poto" id="photo">
+    <h2 id="name">Nama</h2>
+    <p id="alamat">Nama</p>
+    <p id="rating">Nama</p>
+    <p id="jam">Nama</p>
 </body>
 </html>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
@@ -30,7 +34,11 @@
         fetch(url).then(function(data) {
             return data.json()
         }).then(function(res) {
-            document.getElementById('teks').textContent = res.result.name
+            document.getElementById('name').textContent = res.result.name
+            document.getElementById('photo').src = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + res.result.photos[0].photo_reference +'&key=AIzaSyCYjt7ngtOeL04bdX5CTrKgNs8aezmhrCc'
+            document.getElementById('alamat').textContent = res.result.formatted_address
+            document.getElementById('rating').textContent = res.result.rating
+            document.getElementById('jam').textContent = res.result.opening_hours.weekday_text
         })
     })
 </script>

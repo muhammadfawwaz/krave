@@ -85,8 +85,8 @@ var State = sequelize.define('state', {
 // })
 
 // User.destroy({
-//   where: {},
-//   truncate: true
+//   where: {uid: 'Uf2d1b3c98f073d2a12c745049111ca2e'},
+//   // truncate: true
 // })
 
 // State.sync({force: true}).then(function () {
